@@ -23,8 +23,6 @@ function App() {
 	const [theme, setTheme] = useState("light");
 	const [stopGame, setStopGame] = useState(false);
 
-	const cellTextRef = useRef(null);
-
 	const generateSudokuGrid = () => {
 		let grid = [
 			[0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -127,6 +125,7 @@ function App() {
 				setBoard(temp);
 			}
 			else if (isValid(board, selectedCell.i, selectedCell.j, value)) {
+				console.log(typeof value)
 				let temp = board.map((r, i) => {
 					return r.map((s, j) => {
 						return i === selectedCell.i && j === selectedCell.j ? value : s
@@ -209,6 +208,17 @@ function App() {
 		}
 	}
 
+	const handleKeyDown = (event) => {
+		let keyPressed = event.key;
+		console.log(keyPressed);
+		if (parseInt(keyPressed)) {
+			changeValue(parseInt(keyPressed));
+		}
+		else if (keyPressed === "Backspace") {
+			changeValue("");
+		}
+	}
+
 	return (
 		<>
 			<Popup open={stopGame} setOpen={setStopGame} minutes={minutes} seconds={seconds} />
@@ -218,11 +228,11 @@ function App() {
 				<p>Time: {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</p>
 
 				<div className="sudoku-container">
-					<div className="sudoku-grid">
+					<div className="sudoku-grid" tabIndex={0} onKeyDown={handleKeyDown}>
 						{board.map((r, i) => {
 							return r.map((s, j) => {
 								return (
-									<div ref={cellTextRef} id={`cell${i}${j}`} key={`${i}${j}`} onClick={() => setSelectedCell({ i, j })} style={wasBlankCell(selectedCell?.i, selectedCell?.j) && selectedCell?.i === i && selectedCell?.j === j ? { background: "yellow", color: "black" } : !wasBlankCell(i, j) ? { background: "var(--disabled-bg-color)" } : null}>{s}</div>
+									<div id={`cell${i}${j}`} key={`${i}${j}`} onClick={() => setSelectedCell({ i, j })} style={wasBlankCell(selectedCell?.i, selectedCell?.j) && selectedCell?.i === i && selectedCell?.j === j ? { background: "yellow", color: "black" } : !wasBlankCell(i, j) ? { background: "var(--disabled-bg-color)" } : null}>{s}</div>
 								)
 							})
 						})}
