@@ -1,6 +1,6 @@
 {
   "name": "sudoku-react",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://anuragunnikannan.github.io/sudoku-react",
