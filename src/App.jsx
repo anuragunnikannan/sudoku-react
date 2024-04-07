@@ -148,7 +148,8 @@ function App() {
 		localStorage.setItem("grid", JSON.stringify(generateSudokuGrid()));
 		let tempBoard = JSON.parse(localStorage.getItem("grid"));
 		let tempBlankCellIndices = [];
-		for (let i = 1; i <= 64; i++) {
+		let numberOfRandomBlankCells = Math.floor(Math.random() * 70);
+		for (let i = 1; i <= numberOfRandomBlankCells; i++) {
 			let row = Math.floor(Math.random() * (tempBoard.length));
 			let col = Math.floor(Math.random() * (tempBoard[0].length));
 			tempBoard[row][col] = "";
